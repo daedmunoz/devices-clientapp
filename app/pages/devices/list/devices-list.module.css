@@ -1,0 +1,95 @@
+.filtersAndOptions {
+  display: flex;
+  flex-direction: column;
+}
+
+.options {
+  width: 100%;
+}
+
+.filters {
+  width: 100%;
+}
+
+.list {
+  padding: 0;
+}
+
+.list .listItem:first-child {
+  border-top: 1px solid var(--colors-main-background);
+  padding-top: 0.2rem;
+}
+
+.listItem {
+  list-style: none;
+  display: flex;
+  padding-bottom: 0.2rem;
+  margin-bottom: 0.2rem;
+  border-bottom: 1px solid var(--colors-main-background);
+}
+
+.deviceInfo {
+  width: 70%;
+  overflow: hidden;
+}
+
+.deviceInfo h3 {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.deviceInfo h4 {
+  font-size: 1rem;
+  margin: 0.2rem 0 0;
+  font-weight: 300;
+}
+
+.deviceType {
+  color: var(--colors-main-background);
+}
+
+.deviceOptions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;  
+  width: 30%;
+}
+
+.deviceOptions button {
+  margin-top: 0.2rem;
+  width: 100%;
+}
+
+.deviceOptions a {
+  width: 100%;
+}
+
+@media only screen and (min-width: 720px) {
+  .filtersAndOptions {
+    flex-direction: row;
+  }
+  
+  .options {
+    width: 25%;
+  }
+  
+  .filters {
+    width: 75%;
+  }
+
+  .deviceOptions {    
+    justify-content: flex-end;
+    flex-direction: row;
+  }
+
+  .deviceOptions a {
+    width: auto;
+  }
+
+  .deviceOptions button {
+    margin-top: 0;
+    margin-left: 1rem;
+    width: auto;
+  }
+}

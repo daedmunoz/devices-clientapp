@@ -1,0 +1,10 @@
+.linkButton {
+  background-color: var(--colors-main-background); 
+  color: var(--colors-main-background-text); 
+  padding: 0.7rem 1rem;
+  border: 0;
+  cursor: pointer;
+  font-size: 1rem;
+  display: inline-block;
+  text-align: center;
+}

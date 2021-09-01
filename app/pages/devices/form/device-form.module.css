@@ -1,0 +1,62 @@
+.mainContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.formFieldSection {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.label {
+  width: 100%;
+  display: inline-block;
+  margin-bottom: 0.2rem;
+}
+
+.formField {
+  width: 100%;
+}
+
+.messagesSection {
+  min-height: 3.5rem;
+}
+
+.buttonsSection {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.saveButton {
+  min-width: calc(50% - 0.5rem);
+}
+
+.cancelButton {
+  margin-left: 1rem;
+  min-width: calc(50% - 0.5rem);
+}
+
+@media only screen and (min-width: 720px) {
+  .mainContainer {
+    width: 50rem;
+  }
+
+  .label {
+    width: 10rem;
+    margin-bottom: 0;
+  }
+
+  .formField {
+    width: 20rem
+  }
+
+  .form {
+    width: 30rem;
+  }
+}

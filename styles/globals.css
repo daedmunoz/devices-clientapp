@@ -4,6 +4,13 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  --colors-main-background: #4279b1;
+  --colors-main-background-text: white;
+}
+
+body {
+  max-width: 1280px;
+  margin: auto;
 }
 
 a {
@@ -14,3 +21,14 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.content {
+  margin: 1rem 1rem;
+}
+
+@media only screen and (min-width: 720px) {
+  .content {
+    margin: 2rem 1rem;
+  }
+}
+

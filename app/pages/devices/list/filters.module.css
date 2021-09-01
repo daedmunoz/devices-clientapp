@@ -1,0 +1,33 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+}
+
+.filters select {
+  margin-top: 0.3rem;
+  width: 100%; 
+}
+
+.label {
+  margin-top: 1rem;
+  display: inline-block;
+}
+
+@media only screen and (min-width: 720px) {
+  .filters {
+    flex-direction: row;
+  }
+  
+  .sortByLabel {
+    margin-left: 1rem;
+  }
+
+  .label {
+    margin-right: 0.5rem;
+  }
+
+  .filters select {
+    margin-top: 0;
+    width: auto; 
+  }
+}
