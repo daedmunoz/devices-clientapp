@@ -32,4 +32,4 @@ npm run dev -- -p <your-port>
 ## Open the project on a browser
 After you run the project, you can visit [http://localhost:3001/devices](http://localhost:3001/devices) to see the main page with the list of devices.
 
-_Note: The port will be different if you use a different one._
+_Note: The port might be different._
