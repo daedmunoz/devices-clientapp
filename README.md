@@ -24,7 +24,7 @@ Some environment variables are necessary to run this project. Check the `.env.sa
 npm run dev
 ```
 
-By default it runs on port 3001, if you want to change the port, run:
+By default, it runs on port 3001. If you want to change the port, run:
 ```sh
 npm run dev -- -p <your-port>
 ```
