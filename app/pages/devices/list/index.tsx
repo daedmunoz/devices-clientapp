@@ -81,7 +81,7 @@ const DevicesList = (): JSX.Element => {
 
   return (
     <div className="content">
-      {loading && <p>Loading...</p>}
+      {loading && <Message id="loadingDevicesMsg">Loading...</Message>}
       {!loading && (
         <>
           <div className={styles.filtersAndOptions}>

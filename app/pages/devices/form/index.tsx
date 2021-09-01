@@ -107,7 +107,7 @@ const DeviceForm = ({ device, onCancel }: Props): JSX.Element => {
           <div>
             <div className={styles.messagesSection}>
               {errorMessage && <Message id="deviceFormSuccessMsg" type="error">{errorMessage}</Message>}
-              {successMessage && <Message id="deviceFormErrorMsg">{successMessage}</Message>}
+              {successMessage && <Message id="deviceFormErrorMsg" type="success">{successMessage}</Message>}
             </div>
             <div className={styles.buttonsSection}>
               <Button id="submitBtn"

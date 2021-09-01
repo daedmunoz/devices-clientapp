@@ -4,14 +4,18 @@
   text-align: center;
 }
 
+.info {
+  color: var(--colors-info);
+}
+
 .success {
-  color: green;
+  color: var(--colors-success);
 }
 
 .error {
-  color: red;
+  color: var(--colors-error);
 }
 
 .warning {
-  color: black;
+  color: var(--colors-warning);
 }

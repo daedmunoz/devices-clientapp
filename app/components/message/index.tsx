@@ -1,10 +1,11 @@
 import styles from './message.module.css';
 
-type MessageType = 'success' | 'error' | 'warning';
+type MessageType = 'success' | 'error' | 'warning' | 'info';
 const typeStyles: { [key in MessageType]: string } = {
   error: styles.error,
   success: styles.success,
   warning: styles.warning,
+  info: styles.info,
 };
 
 type Props = {
@@ -13,7 +14,7 @@ type Props = {
   children: React.ReactNode;
   className?: string
 };
-const Message = ({ id, type = 'success', children, className = '' }: Props): JSX.Element => {
+const Message = ({ id, type = 'info', children, className = '' }: Props): JSX.Element => {
   return (
     <p
       id={id}

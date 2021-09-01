@@ -6,7 +6,7 @@ module.exports = {
       {
         source: '/',
         destination: '/devices',
-        permanent: true,
+        permanent: false,
       },
     ]
   },

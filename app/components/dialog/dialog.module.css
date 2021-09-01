@@ -16,7 +16,7 @@
 
 .contentWrapper {
   padding: 2rem;
-  background-color: white;
+  background-color: var(--colors-dialog-background);
 }
 
 .actions {
