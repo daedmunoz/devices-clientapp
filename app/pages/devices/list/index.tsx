@@ -50,10 +50,10 @@ const DevicesList = (): JSX.Element => {
     setDeviceToDelete(null);
   }
 
-  const onFiltersChange = ({ sortByOption, systemType }: { sortByOption: SortByOption, systemType: string }) => {
+  const onFiltersChange = ({ sortByOption, systemTypes }: { sortByOption: SortByOption, systemTypes: string[] }) => {
     let newVisibleDevices = [...devices];
-    if (systemType) {
-      newVisibleDevices = newVisibleDevices.filter(d => d.type === systemType);
+    if (systemTypes.length > 0) {
+      newVisibleDevices = newVisibleDevices.filter(d => systemTypes.includes(d.type));
     }
 
     if (sortByOption) {

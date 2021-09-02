@@ -6,13 +6,15 @@ type Props = {
   onChange?(e: ChangeEvent<HTMLSelectElement>): void;
   children: React.ReactNode;
   className?: string
-  value: string;
+  value: string | string[];
+  multiple?: boolean;
 };
 
-const Select = ({ id, onChange, children, className = '', value }: Props): JSX.Element => {
+const Select = ({ id, onChange, children, className = '', value, multiple = false }: Props): JSX.Element => {
   return (
-    <select
+    <select      
       id={id}
+      multiple={multiple}
       onChange={onChange}
       value={value}
       className={`${styles.select} ${className}`}>{children}</select>

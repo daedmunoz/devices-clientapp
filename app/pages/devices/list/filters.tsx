@@ -9,13 +9,13 @@ const deviceTypeOptions = [allSystemType, ...deviceTypes];
 
 const sortByOptions: SortByOption[] = ['HDD', 'System Name'];
 
-type OnFilterChangeOptions = { sortByOption: SortByOption; systemType: string; };
+type OnFilterChangeOptions = { sortByOption: SortByOption; systemTypes: string[]; };
 type Props = {
   onFiltersChange(options: OnFilterChangeOptions): void;
 };
 
 const DevicesFilters = ({ onFiltersChange }: Props): JSX.Element => {
-  const [systemType, setSystemType] = useState(allSystemType);
+  const [systemTypes, setSystemTypes] = useState([allSystemType]);
   const [sortBy, setSortBy] = useState<SortByOption>('HDD');
 
   const mapDeviceTypeOption = (option: string) => {
@@ -29,15 +29,16 @@ const DevicesFilters = ({ onFiltersChange }: Props): JSX.Element => {
   const buildFilterValues = (options: OnFilterChangeOptions): OnFilterChangeOptions => {
     return {
       sortByOption: options.sortByOption,
-      systemType: options.systemType !== allSystemType ? options.systemType : '',
+      systemTypes: options.systemTypes.includes(allSystemType) ? [] : options.systemTypes.filter(type => type !== allSystemType),
     }
   };
 
   const handleSystemTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setSystemType(e.target.value);
+    const newSystemTypes = Array.from(e.target.selectedOptions, option => option.value);
+    setSystemTypes(Array.from(e.target.selectedOptions, option => option.value));
     onFiltersChange(buildFilterValues({
       sortByOption: sortBy,
-      systemType: e.target.value,
+      systemTypes: newSystemTypes,
     }));
   }
 
@@ -45,7 +46,7 @@ const DevicesFilters = ({ onFiltersChange }: Props): JSX.Element => {
     setSortBy(e.target.value as SortByOption);
     onFiltersChange(buildFilterValues({
       sortByOption: e.target.value as SortByOption,
-      systemType,
+      systemTypes,
     }));
   }
 
@@ -53,7 +54,7 @@ const DevicesFilters = ({ onFiltersChange }: Props): JSX.Element => {
     <div className={styles.filters}>
       <div className={styles.filterWraper}>
         <label htmlFor="deviceTapSel" className={styles.label}>Device Type:</label>
-        <Select id="deviceTapSel" onChange={handleSystemTypeChange} value={systemType}>
+        <Select id="deviceTapSel" onChange={handleSystemTypeChange} value={systemTypes} multiple>
           {deviceTypeOptions.map(mapDeviceTypeOption)}
         </Select>
       </div>

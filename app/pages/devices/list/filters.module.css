@@ -22,7 +22,13 @@
     margin-left: 1rem;
   }
 
+  .filterWraper {
+    display: flex;
+    align-items: flex-start;
+  }
+
   .label {
+    margin-top: 0;
     margin-right: 0.5rem;
   }
 
