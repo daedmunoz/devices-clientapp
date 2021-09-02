@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { servicesProvider } from '../../../common/services-provider';
 import Button from '../../../components/button';
 import LinkButton from '../../../components/link-button';
 import Message from '../../../components/message';
+import { AppContext } from '../../../contexts/app-context';
 import { Device } from '../../../model/device';
-import { deviceTypeMapper } from '../common/common-values';
+import { allSystemType, deviceTypeMapper } from '../common/common-values';
 import { SortByOption } from '../common/models/sort-by-option';
 import DeleteDeviceDialog from '../delete-device-dialog';
 import { devicesRoutes } from '../routes';
@@ -19,22 +20,43 @@ const sorters: { [key in SortByOption]: (a: Device, b: Device) => number } = {
 }
 
 const defaultSortByOption: SortByOption = 'HDD';
+
 const DevicesList = (): JSX.Element => {
-  const [loading, setLoading] = useState(true);
+  const { devices: { filters, updateFilters } } = useContext(AppContext);
+
+  const [initialDataLoaded, setInitialDataLoaded] = useState(false);
   const [devices, setDevices] = useState<Device[]>([]);
   const [visibleDevices, setVisibleDevices] = useState<Device[]>([]);
   const [deviceToDelete, setDeviceToDelete] = useState<Device | null>(null);
 
+  // Load initial data
   useEffect(() => {
+    if (initialDataLoaded) {
+      return;
+    }
     const loadDevices = async () => {
       const devices = await devicesApiService.getDevices();
-      devices.sort(sorters[defaultSortByOption]);
+      devices.sort(sorters[filters.sortByOption]);
       setDevices(devices);
       setVisibleDevices(devices);
-      setLoading(false);
+      setInitialDataLoaded(true);
     }
     loadDevices();
-  }, []);
+  }, [filters, initialDataLoaded]);
+
+  // Filter devices
+  useEffect(() => {
+    let newVisibleDevices = [...devices];
+    if (!filters.systemTypes.includes(allSystemType) && filters.systemTypes.length > 0) {
+      newVisibleDevices = newVisibleDevices.filter(d => filters.systemTypes.includes(d.type));
+    }
+
+    if (filters.sortByOption) {
+      newVisibleDevices.sort(sorters[filters.sortByOption]);
+    }
+
+    setVisibleDevices(newVisibleDevices);
+  }, [filters, devices])
 
   const onDeleteClicked = (device: Device) => () => {
     setDeviceToDelete(device);
@@ -49,19 +71,6 @@ const DevicesList = (): JSX.Element => {
     setVisibleDevices(visibleDevices.filter(d => d.id !== device.id));
     setDeviceToDelete(null);
   }
-
-  const onFiltersChange = ({ sortByOption, systemTypes }: { sortByOption: SortByOption, systemTypes: string[] }) => {
-    let newVisibleDevices = [...devices];
-    if (systemTypes.length > 0) {
-      newVisibleDevices = newVisibleDevices.filter(d => systemTypes.includes(d.type));
-    }
-
-    if (sortByOption) {
-      newVisibleDevices.sort(sorters[sortByOption]);
-    }
-
-    setVisibleDevices(newVisibleDevices);
-  };
 
   const mapDevice = (device: Device) => {
     return (
@@ -81,15 +90,15 @@ const DevicesList = (): JSX.Element => {
 
   return (
     <div className="content">
-      {loading && <Message id="loadingDevicesMsg">Loading...</Message>}
-      {!loading && (
+      {!initialDataLoaded && <Message id="loadingDevicesMsg">Loading...</Message>}
+      {initialDataLoaded && (
         <>
           <div className={styles.filtersAndOptions}>
             <div className={styles.options}>
               <LinkButton id="addLnk" href={devicesRoutes.add} title="Add new device">Add</LinkButton>
             </div>
             <div className={styles.filters}>
-              <DevicesFilters onFiltersChange={onFiltersChange} />
+              <DevicesFilters />
             </div>
           </div>
           <p>Total: {visibleDevices.length}</p>

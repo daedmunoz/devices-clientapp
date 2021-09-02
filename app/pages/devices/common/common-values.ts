@@ -6,3 +6,5 @@ export const deviceTypeMapper: { [key: string]: string } = {
   WINDOWS_SERVER: 'Windows Server',
   MAC: 'Mac',
 };
+
+export const allSystemType = 'All';
