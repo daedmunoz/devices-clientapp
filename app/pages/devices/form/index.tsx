@@ -77,7 +77,7 @@ const DeviceForm = ({ device, onCancel }: Props): JSX.Element => {
         setFormData({ ...device });
         setSuccessMessage('The device has been added!');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error persisting device!', error);
       setErrorMessage(error.message);
     } finally {

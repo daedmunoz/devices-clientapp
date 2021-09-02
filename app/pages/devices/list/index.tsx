@@ -16,36 +16,42 @@ const devicesApiService = servicesProvider.getDevicesApiService();
 
 const sorters: { [key in SortByOption]: (a: Device, b: Device) => number } = {
   'HDD': (a, b) => +a.hdd_capacity > +b.hdd_capacity ? 1 : -1,
-  'System Name': (a, b) => a.system_name > b.system_name ? 1 : -1,
+  'System Name': (a, b) => (a.system_name || '').toLowerCase() > (b.system_name || '').toLowerCase() ? 1 : -1,
 }
 
-const defaultSortByOption: SortByOption = 'HDD';
-
 const DevicesList = (): JSX.Element => {
-  const { devices: { filters, updateFilters } } = useContext(AppContext);
+  const { devices: { filters } } = useContext(AppContext);
 
-  const [initialDataLoaded, setInitialDataLoaded] = useState(false);
+  const [devicesLoaded, setDevicesLoaded] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [devices, setDevices] = useState<Device[]>([]);
   const [visibleDevices, setVisibleDevices] = useState<Device[]>([]);
   const [deviceToDelete, setDeviceToDelete] = useState<Device | null>(null);
 
   // Load initial data
   useEffect(() => {
-    if (initialDataLoaded) {
+    if (devicesLoaded) {
       return;
     }
     const loadDevices = async () => {
-      const devices = await devicesApiService.getDevices();
-      devices.sort(sorters[filters.sortByOption]);
-      setDevices(devices);
-      setVisibleDevices(devices);
-      setInitialDataLoaded(true);
+      try {
+        const devices = await devicesApiService.getDevices();
+        setDevices(devices);
+      } catch (error: any) {
+        console.error('Error loading initial data', error);
+        setErrorMessage(`Oops! Could not load devices. Reason: ${error.message}`);
+      } finally {
+        setDevicesLoaded(true);
+      }
     }
     loadDevices();
-  }, [filters, initialDataLoaded]);
+  }, [filters, devicesLoaded]);
 
-  // Filter devices
+  // Set visible devices
   useEffect(() => {
+    if (!devicesLoaded) {
+      return;
+    }
     let newVisibleDevices = [...devices];
     if (!filters.systemTypes.includes(allSystemType) && filters.systemTypes.length > 0) {
       newVisibleDevices = newVisibleDevices.filter(d => filters.systemTypes.includes(d.type));
@@ -56,7 +62,7 @@ const DevicesList = (): JSX.Element => {
     }
 
     setVisibleDevices(newVisibleDevices);
-  }, [filters, devices])
+  }, [filters, devices, devicesLoaded])
 
   const onDeleteClicked = (device: Device) => () => {
     setDeviceToDelete(device);
@@ -90,9 +96,10 @@ const DevicesList = (): JSX.Element => {
 
   return (
     <div className="content">
-      {!initialDataLoaded && <Message id="loadingDevicesMsg">Loading...</Message>}
-      {initialDataLoaded && (
+      {!devicesLoaded && <Message id="loadingDevicesMsg">Loading...</Message>}
+      {devicesLoaded && (
         <>
+          {errorMessage && <Message id="loadingDevicesErrorMsg" type="error">{errorMessage}</Message>}
           <div className={styles.filtersAndOptions}>
             <div className={styles.options}>
               <LinkButton id="addLnk" href={devicesRoutes.add} title="Add new device">Add</LinkButton>

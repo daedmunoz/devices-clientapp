@@ -34,7 +34,6 @@ export class HTTPServiceImpl implements HTTPService {
   }
 
   async delete<T>(opts: { url: string; }): Promise<T> {
-    console.log('DELETING!!!');
     const response = await fetch(opts.url, {
       method: 'DELETE',
       headers: this.commonHeaders,

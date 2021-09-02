@@ -24,7 +24,7 @@ const UpdateDevicePage = (): JSX.Element => {
       try {
         const device = await devicesApiService.getDevice(`${id}` as string);
         setDevice(device);
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error loading device', error);
         setErrorMessage(error.message);
       } finally {

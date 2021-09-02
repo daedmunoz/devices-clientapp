@@ -17,11 +17,14 @@ const DeleteDeviceDialog = ({ device, onCancel, onDeleted }: Props): JSX.Element
 
   const deleteDevice = async () => {
     try {
+      setDeleting(true);
       await devicesApiService.deleteDevice(device.id as string);
+      setDeleting(false);
       onDeleted(device);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error deleting device', error);
       setErrorMessage(error.message);
+      setDeleting(false);
     }
   }
 
