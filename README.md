@@ -18,6 +18,10 @@ Some environment variables are necessary to run this project. Check the `.env.sa
 
 - `NEXT_PUBLIC_API_BASE_URL`, this is the base URL of the server app. Remember to put a slash (`/`) at the end of it. It defaults to `http://localhost:3000/`.
 
+## Run tests
+```
+npm run test
+```
 
 ## Run the project
 ```sh

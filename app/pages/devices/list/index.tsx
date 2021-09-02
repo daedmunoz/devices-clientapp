@@ -95,7 +95,7 @@ const DevicesList = (): JSX.Element => {
           <p>Total: {visibleDevices.length}</p>
           {visibleDevices.length === 0 && <Message id="noDevicesFoundMsg" type="warning">No devices found!</Message>}
           {visibleDevices.length > 0 && (
-            <ul className={styles.list}>
+            <ul id="devicesList" className={styles.list}>
               {visibleDevices.map(mapDevice)}
             </ul>
           )}
