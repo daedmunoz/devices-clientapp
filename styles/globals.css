@@ -11,6 +11,8 @@ body {
   --colors-error: red;
   --colors-warning: black;
   --colors-info: black;
+
+  --input-padding: 0.5rem 0.5rem;
 }
 
 body {
